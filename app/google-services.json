@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1069923363176",
+    "project_id": "tinderc-b4310",
+    "storage_bucket": "tinderc-b4310.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069923363176:android:95d5a8ceff0d4f3e20cedd",
+        "android_client_info": {
+          "package_name": "com.kgstrivers.tinderc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069923363176-cflulub9mpii80kppik84i463h4h8van.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEFim_QvegFLKApZKzfaiwS7q4zgU71Uc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069923363176-cflulub9mpii80kppik84i463h4h8van.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

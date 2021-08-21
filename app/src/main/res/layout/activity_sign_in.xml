@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignInActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#5000ca">
+
+        <TextView
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="55dp"
+            android:fontFamily="@font/countryside"
+            android:text="Already Have Account?\nSign In"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/women_avatar" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/ic_wave" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="270dp"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/signinemail"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/customsignupedittext"
+            android:drawableLeft="@drawable/ic_baseline_email_24"
+            android:hint="Email"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/signinpass"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/customsignupedittext"
+            android:drawableLeft="@drawable/ic_baseline_lock_24"
+            android:hint="Password"
+            android:paddingLeft="10dp"
+            android:password="true"
+            android:singleLine="true" />
+
+
+        <Button
+            android:id="@+id/SignInButtonSignInPage"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/signupbuttonsignuppage"
+            android:text="Sign In"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="145dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Forgot Password"
+            android:textColor="@color/Blue"
+            android:textSize="18dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <ImageButton
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="95dp"
+                android:background="@drawable/google_pic" />
+
+            <ImageButton
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="120dp"
+                android:background="@drawable/facebook_pic" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/newuser"
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="145dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="New User?Register"
+            android:textColor="@color/Blue"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
