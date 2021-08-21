@@ -65,34 +65,59 @@ public class SignUpActivity extends AppCompatActivity {
             final String name = signupname.getText().toString();
             String sex = "";
 
-            if(male.isSelected())
+            if(male.isChecked())
             {
                 sex = male.getText().toString();
             }
-            else if(female.isSelected())
+            else if(female.isChecked())
             {
                 sex = female.getText().toString();
             }
 
-            if(!cpass.equals(pass))
+            if(email.isEmpty())
+            {
+                signupemail.setError("Empty Email");
+            }
+            else if(pass.isEmpty())
+            {
+                signuppass.setError("Empty Password");
+            }
+            else if(cpass.isEmpty())
+            {
+                signupcpass.setError("Empty Confirm Password");
+            }
+            else if(!cpass.equals(pass))
             {
                 signupcpass.setText("");
                 signupcpass.setError("Not matched with Password");
-            }else
+            }
+            else
             {
-                mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful())
-                        {
-                            Toast.makeText(SignUpActivity.this, "Sign Up Error:", Toast.LENGTH_SHORT).show();
+                if(name.isEmpty())
+                {
+                    signupname.setError("Name Empty");
+                }
+                else if(sex.isEmpty())
+                {
+                    Toast.makeText(this, "Sex is not Selected", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(!task.isSuccessful())
+                            {
+                                Toast.makeText(SignUpActivity.this, "Sign Up Error:", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(), "Sign up Successful", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(), "Sign up Successful", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+                }
+
             }
 
 
