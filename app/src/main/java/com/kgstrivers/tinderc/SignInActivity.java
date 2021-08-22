@@ -17,6 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.kgstrivers.tinderc.Model.Logind;
+import com.kgstrivers.tinderc.Model.Logoutd;
+import com.kgstrivers.tinderc.Model.Users;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -69,6 +78,17 @@ public class SignInActivity extends AppCompatActivity {
                         }
                         else
                         {
+
+                            String userid = mAuth.getCurrentUser().getUid();
+                            DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, hh:mm::ss a");
+                            String date = df.format(Calendar.getInstance().getTime());
+
+                            Logind userl = new Logind(mAuth.getCurrentUser().getEmail(),date);
+
+
+                            DatabaseReference dataref = FirebaseDatabase.getInstance().getReference().child("Siginandsignout").child(userid).child("Login");
+
+                            dataref.setValue(userl);
                             Toast.makeText(getApplicationContext(), "Sign In Successful", Toast.LENGTH_SHORT).show();
                         }
                     }
