@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,9 +17,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kgstrivers.tinderc.Model.Logoutd;
 import com.kgstrivers.tinderc.Model.Users;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -28,6 +32,11 @@ public class MainPageActivity extends AppCompatActivity {
     private Button logout;
     private FirebaseAuth mAuth;
     private long backPressedtime;
+    private ArrayList<String> al;
+    private ArrayAdapter<String> arrayAdapter;
+    private int i;
+
+    SwipeFlingAdapterView filingContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +45,52 @@ public class MainPageActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         initialize();
+
+        al = new ArrayList<String>();
+        al.add("php");
+        al.add("c");
+        al.add("python");
+        al.add("java");
+
+        //choose your favorite adapter
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.item, R.id.helloText, al);
+
+
+        filingContainer.setAdapter(arrayAdapter);
+        filingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+            @Override
+            public void removeFirstObjectInAdapter() {
+
+                al.remove(0);
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLeftCardExit(Object o) {
+
+                Toast.makeText(MainPageActivity.this, "Left", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRightCardExit(Object o) {
+
+                Toast.makeText(MainPageActivity.this, "Right", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdapterAboutToEmpty(int arri) {
+
+                al.add("XML".concat(String.valueOf(i)));
+                arrayAdapter.notifyDataSetChanged();
+                Log.d("Not:","Notified");
+                i++;
+            }
+
+            @Override
+            public void onScroll(float v) {
+
+            }
+        });
 
         if(mAuth!=null)
         {
@@ -80,6 +135,7 @@ public class MainPageActivity extends AppCompatActivity {
     {
         email = findViewById(R.id.email);
         logout = findViewById(R.id.logout);
+        filingContainer = (SwipeFlingAdapterView) findViewById(R.id.swipeadapter);
 
     }
 
