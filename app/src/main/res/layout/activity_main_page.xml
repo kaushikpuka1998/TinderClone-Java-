@@ -6,28 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".MainPageActivity">
 
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="20dp"
-        android:text="Main Page Activity" />
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="150dp"
-        android:text="Log Out"/>
-
-
-    <com.lorentzos.flingswipe.SwipeFlingAdapterView
-        android:id="@+id/swipeadapter"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="550dp"
-        android:layout_marginTop="120dp"
-        app:rotation_degrees="15.5" />
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="20dp"
+                android:text="Main Page Activity" />
+
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="150dp"
+                android:text="Log Out"/>
+
+
+            <com.lorentzos.flingswipe.SwipeFlingAdapterView
+                android:id="@+id/swipeadapter"
+                android:layout_width="match_parent"
+                android:layout_height="550dp"
+                android:layout_marginTop="120dp"
+                app:rotation_degrees="15.5" >
+
+
+
+            </com.lorentzos.flingswipe.SwipeFlingAdapterView>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="450dp"
+                android:layout_marginTop="690dp">
+
+                <TextView
+                    android:id="@+id/value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HELLO"/>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
 </RelativeLayout>

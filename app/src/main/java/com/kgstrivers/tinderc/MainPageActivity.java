@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kgstrivers.tinderc.Model.Cards;
+import com.kgstrivers.tinderc.Model.Logind;
 import com.kgstrivers.tinderc.Model.Logoutd;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -29,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class MainPageActivity extends AppCompatActivity {
@@ -38,28 +42,12 @@ public class MainPageActivity extends AppCompatActivity {
     private Button logout;
     private FirebaseAuth mAuth;
     private long backPressedtime;
-    private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
-    private int i;
-
-    String usersex="";
-    String oppositesex="";
-
-    public void setusersex(String userx)
-    {
-        this.usersex = userx;
-    }
-
-    public void setoppositesex(String osex)
-    {
-        this.oppositesex = osex;
-    }
-
+    private arrayAdapter arrayAdapter;
     SwipeFlingAdapterView filingContainer;
+    TextView vf;
+    ListView listView;
+    List<Cards> listcard;
 
-
-
-    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +57,9 @@ public class MainPageActivity extends AppCompatActivity {
 
         initialize();
 
-        al = new ArrayList<String>();
+        listcard= new ArrayList<Cards>();
         //choose your favorite adapter
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.item, R.id.helloText, al);
+        arrayAdapter = new arrayAdapter(this, R.layout.item, listcard);
 
 
         filingContainer.setAdapter(arrayAdapter);
@@ -79,19 +67,21 @@ public class MainPageActivity extends AppCompatActivity {
             @Override
             public void removeFirstObjectInAdapter() {
 
-                al.remove(0);
+                listcard.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onLeftCardExit(Object o) {
 
+                vf.setText("UPDATED");
                 Toast.makeText(MainPageActivity.this, "Left", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object o) {
 
+                vf.setText("Updated");
                 Toast.makeText(MainPageActivity.this, "Right", Toast.LENGTH_SHORT).show();
             }
 
@@ -152,6 +142,8 @@ public class MainPageActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
 
@@ -161,7 +153,7 @@ public class MainPageActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         logout = findViewById(R.id.logout);
         filingContainer = (SwipeFlingAdapterView) findViewById(R.id.swipeadapter);
-
+        vf = findViewById(R.id.value);
     }
 
 
@@ -263,7 +255,8 @@ public class MainPageActivity extends AppCompatActivity {
 
                 if(snapshot.exists())
                 {
-                    al.add(snapshot.child("Users").child("name").getValue().toString());
+                    Cards cards = new Cards("",snapshot.child("Users").child("name").getValue().toString(),snapshot.getKey());
+                    listcard.add(cards);
                     arrayAdapter.notifyDataSetChanged();
                 }
             }
@@ -303,6 +296,17 @@ public class MainPageActivity extends AppCompatActivity {
             Intent in = new Intent(Intent.ACTION_MAIN);
             in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             in.addCategory(Intent.CATEGORY_HOME);
+
+            String userid = mAuth.getCurrentUser().getUid();
+            DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, hh:mm::ss a");
+            String date = df.format(Calendar.getInstance().getTime());
+
+            Logoutd userl = new Logoutd(mAuth.getCurrentUser().getEmail(),date);
+
+
+            DatabaseReference dataref = FirebaseDatabase.getInstance().getReference().child("Siginandsignout").child(userid).child("Logout");
+
+            dataref.setValue(userl);
             startActivity(in);
             finish();
             System.exit(0);

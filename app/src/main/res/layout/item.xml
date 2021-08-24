@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="250dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
     android:layout_gravity="center"
     android:background="@drawable/custom_button"
-    android:layout_height="450dp">
+    android:layout_height="550dp">
 
-    <TextView
-        android:id="@+id/helloText"
-        android:textSize="40sp"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:text="Hello"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <View
         android:id="@+id/item_swipe_left_indicator"
-        android:alpha="0"
+        android:alpha="10"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="10dp"
@@ -24,12 +17,51 @@
 
     <View
         android:id="@+id/item_swipe_right_indicator"
-        android:alpha="0"
+        android:alpha="10"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="10dp"
         android:layout_gravity="right"
         android:background="@color/Violet" />
+
+    <ImageView
+        android:id="@+id/itemimageview"
+        android:layout_width="330dp"
+        android:layout_height="530dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/kaushik"/>
+    <TextView
+        android:id="@+id/helloText"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="500dp"
+        android:layout_marginLeft="15dp"
+        android:text="Hello"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="245dp"
+        android:layout_marginTop="450dp"
+        android:background="@drawable/hexa1" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="450dp"
+        android:layout_marginTop="690dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HELLO"/>
+
+    </RelativeLayout>
+
+
 
 
 
