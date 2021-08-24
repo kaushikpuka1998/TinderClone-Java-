@@ -1,28 +1,34 @@
 package com.kgstrivers.tinderc;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kgstrivers.tinderc.Model.Logoutd;
-import com.kgstrivers.tinderc.Model.Users;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class MainPageActivity extends AppCompatActivity {
@@ -36,7 +42,24 @@ public class MainPageActivity extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapter;
     private int i;
 
+    String usersex="";
+    String oppositesex="";
+
+    public void setusersex(String userx)
+    {
+        this.usersex = userx;
+    }
+
+    public void setoppositesex(String osex)
+    {
+        this.oppositesex = osex;
+    }
+
     SwipeFlingAdapterView filingContainer;
+
+
+
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +70,6 @@ public class MainPageActivity extends AppCompatActivity {
         initialize();
 
         al = new ArrayList<String>();
-        al.add("php");
-        al.add("c");
-        al.add("python");
-        al.add("java");
-
         //choose your favorite adapter
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.item, R.id.helloText, al);
 
@@ -80,10 +98,7 @@ public class MainPageActivity extends AppCompatActivity {
             @Override
             public void onAdapterAboutToEmpty(int arri) {
 
-                al.add("XML".concat(String.valueOf(i)));
-                arrayAdapter.notifyDataSetChanged();
-                Log.d("Not:","Notified");
-                i++;
+
             }
 
             @Override
@@ -92,11 +107,18 @@ public class MainPageActivity extends AppCompatActivity {
             }
         });
 
+
         if(mAuth!=null)
         {
             String em = mAuth.getCurrentUser().getEmail().toString();
             email.setText(em);
+
+            usersexfind();
+
+
+
         }
+
 
 
 
@@ -128,16 +150,150 @@ public class MainPageActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
 
     private void initialize()
     {
+
         email = findViewById(R.id.email);
         logout = findViewById(R.id.logout);
         filingContainer = (SwipeFlingAdapterView) findViewById(R.id.swipeadapter);
 
     }
+
+
+
+    public void usersexfind()
+    {
+        Boolean[] present = {false};
+        final DatabaseReference maleref = FirebaseDatabase.getInstance().getReference().child("Users").child("male");
+        maleref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+
+
+
+
+                    Log.d("UserKey:",snapshot.getKey());
+                    if(snapshot.getKey().equals(mAuth.getUid()))
+                    {
+                        System.out.println(snapshot.getKey().equals(mAuth.getUid()));
+                        oppositesexfind("female");
+                    }
+
+
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        final DatabaseReference femaleref = FirebaseDatabase.getInstance().getReference().child("Users").child("female");
+
+        femaleref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getKey().equals(mAuth.getUid()))
+                {
+                    System.out.println(snapshot.getKey().equals(mAuth.getUid()));
+                    oppositesexfind("male");
+                }
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+
+    }
+
+    private void oppositesexfind(String oppositesex)
+    {
+
+        final DatabaseReference oppref = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositesex);
+
+        oppref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+
+                if(snapshot.exists())
+                {
+                    al.add(snapshot.child("Users").child("name").getValue().toString());
+                    arrayAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+    }
+
+
 
     private void bckpress()
     {
