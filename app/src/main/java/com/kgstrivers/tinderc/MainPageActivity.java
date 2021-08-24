@@ -45,9 +45,15 @@ public class MainPageActivity extends AppCompatActivity {
     private arrayAdapter arrayAdapter;
     SwipeFlingAdapterView filingContainer;
     TextView vf;
-    ListView listView;
     List<Cards> listcard;
 
+    DatabaseReference userdb;
+
+
+    public void setOpposex(String  u)
+    {
+        opposex = u;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +61,9 @@ public class MainPageActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+
+
+        userdb = FirebaseDatabase.getInstance().getReference().child("Users");
         initialize();
 
         listcard= new ArrayList<Cards>();
@@ -63,6 +72,17 @@ public class MainPageActivity extends AppCompatActivity {
 
 
         filingContainer.setAdapter(arrayAdapter);
+
+        if(mAuth!=null)
+        {
+            String em = mAuth.getCurrentUser().getEmail().toString();
+            email.setText(em);
+
+            usersexfind();
+
+
+
+        }
         filingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
@@ -75,6 +95,14 @@ public class MainPageActivity extends AppCompatActivity {
             public void onLeftCardExit(Object o) {
 
                 vf.setText("UPDATED");
+
+
+
+                Cards newcard = (Cards)o;
+
+                String userid = newcard.getUserid();
+                userdb.child(opposex).child(userid).child("Connections").child("Rejected").child(mAuth.getUid()).setValue("true");
+
                 Toast.makeText(MainPageActivity.this, "Left", Toast.LENGTH_SHORT).show();
             }
 
@@ -82,6 +110,11 @@ public class MainPageActivity extends AppCompatActivity {
             public void onRightCardExit(Object o) {
 
                 vf.setText("Updated");
+
+                Cards newcard = (Cards)o;
+
+                String userid = newcard.getUserid();
+                userdb.child(opposex).child(userid).child("Connections").child("Liked").child(mAuth.getUid()).setValue("true");
                 Toast.makeText(MainPageActivity.this, "Right", Toast.LENGTH_SHORT).show();
             }
 
@@ -98,16 +131,7 @@ public class MainPageActivity extends AppCompatActivity {
         });
 
 
-        if(mAuth!=null)
-        {
-            String em = mAuth.getCurrentUser().getEmail().toString();
-            email.setText(em);
 
-            usersexfind();
-
-
-
-        }
 
 
 
@@ -242,10 +266,12 @@ public class MainPageActivity extends AppCompatActivity {
 
 
     }
-
+    String opposex;
     private void oppositesexfind(String oppositesex)
     {
 
+
+        setOpposex(oppositesex);
         final DatabaseReference oppref = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositesex);
 
         oppref.addChildEventListener(new ChildEventListener() {
@@ -253,7 +279,7 @@ public class MainPageActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
 
-                if(snapshot.exists())
+                if(snapshot.exists() && !snapshot.child("Connections").child("Rejected").hasChild(mAuth.getUid()) && !snapshot.child("Connections").child("Liked").hasChild(mAuth.getUid()))
                 {
                     Cards cards = new Cards("",snapshot.child("Users").child("name").getValue().toString(),snapshot.getKey());
                     listcard.add(cards);
