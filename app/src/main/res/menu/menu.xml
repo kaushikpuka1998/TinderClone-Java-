@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+
+    <item
+        android:id="@+id/fragaacount"
+        android:icon="@drawable/ic_baseline_account"
+        android:title="" />
+
+    <item
+        android:id="@+id/fraghome"
+        android:icon="@drawable/ic_baseline_swipe"
+        android:title=""
+        android:checked="true"/>
+
+
+
+    <item
+        android:id="@+id/fragmsg"
+        android:icon="@drawable/ic_messageano"
+        android:title="" />
+
+
+</menu>

@@ -3,11 +3,14 @@ package com.kgstrivers.tinderc;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -22,6 +26,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.kgstrivers.tinderc.Fragment.AccountFragment;
+import com.kgstrivers.tinderc.Fragment.MainFragment;
+import com.kgstrivers.tinderc.Fragment.MessageFragment;
 import com.kgstrivers.tinderc.Model.Cards;
 import com.kgstrivers.tinderc.Model.Logind;
 import com.kgstrivers.tinderc.Model.Logoutd;
@@ -43,98 +51,62 @@ public class MainPageActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private long backPressedtime;
     private arrayAdapter arrayAdapter;
-    SwipeFlingAdapterView filingContainer;
-    TextView vf;
-    List<Cards> listcard;
-
-    DatabaseReference userdb;
+    BottomNavigationView bottomNavigationView;
 
 
-    public void setOpposex(String  u)
-    {
-        opposex = u;
-    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
-        mAuth = FirebaseAuth.getInstance();
-
-
-
-        userdb = FirebaseDatabase.getInstance().getReference().child("Users");
         initialize();
+        MainFragment mainFragment = new MainFragment();
 
-        listcard= new ArrayList<Cards>();
-        //choose your favorite adapter
-        arrayAdapter = new arrayAdapter(this, R.layout.item, listcard);
-
-
-        filingContainer.setAdapter(arrayAdapter);
-
+        bottomNavigationView.setSelectedItemId(R.id.fraghome);
         if(mAuth!=null)
         {
             String em = mAuth.getCurrentUser().getEmail().toString();
             email.setText(em);
-
-            usersexfind();
-
-
-
         }
-        filingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+
+        loadFragment(mainFragment);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("ResourceType")
             @Override
-            public void removeFirstObjectInAdapter() {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                listcard.remove(0);
-                arrayAdapter.notifyDataSetChanged();
-            }
+                Fragment fragment=null;
+                switch(item.getItemId())
+                {
+                    case R.id.fraghome:
 
-            @Override
-            public void onLeftCardExit(Object o) {
+                        fragment =new MainFragment();
+                        break;
 
-                vf.setText("UPDATED");
+                    case R.id.fragmsg:
 
+                        fragment = new MessageFragment();
 
+                        break;
 
-                Cards newcard = (Cards)o;
+                    case R.id.fragaacount:
 
-                String userid = newcard.getUserid();
-                userdb.child(opposex).child(userid).child("Connections").child("Rejected").child(mAuth.getUid()).setValue("true");
+                        fragment = new AccountFragment();
 
-                Toast.makeText(MainPageActivity.this, "Left", Toast.LENGTH_SHORT).show();
-            }
+                        break;
 
-            @Override
-            public void onRightCardExit(Object o) {
+                }
 
-                vf.setText("Updated");
-
-                Cards newcard = (Cards)o;
-
-                String userid = newcard.getUserid();
-                userdb.child(opposex).child(userid).child("Connections").child("Liked").child(mAuth.getUid()).setValue("true");
-                Toast.makeText(MainPageActivity.this, "Right", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAdapterAboutToEmpty(int arri) {
+                loadFragment(fragment);
+                return true;
 
 
-            }
-
-            @Override
-            public void onScroll(float v) {
 
             }
         });
-
-
-
-
-
-
 
 
 
@@ -162,155 +134,18 @@ public class MainPageActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
     }
 
 
     private void initialize()
     {
 
+        mAuth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email);
         logout = findViewById(R.id.logout);
-        filingContainer = (SwipeFlingAdapterView) findViewById(R.id.swipeadapter);
-        vf = findViewById(R.id.value);
+        bottomNavigationView = findViewById(R.id.bottomnavigationview);
     }
 
-
-
-    public void usersexfind()
-    {
-        Boolean[] present = {false};
-        final DatabaseReference maleref = FirebaseDatabase.getInstance().getReference().child("Users").child("male");
-        maleref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
-
-
-
-
-                    Log.d("UserKey:",snapshot.getKey());
-                    if(snapshot.getKey().equals(mAuth.getUid()))
-                    {
-                        System.out.println(snapshot.getKey().equals(mAuth.getUid()));
-                        oppositesexfind("female");
-                    }
-
-
-
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        final DatabaseReference femaleref = FirebaseDatabase.getInstance().getReference().child("Users").child("female");
-
-        femaleref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.getKey().equals(mAuth.getUid()))
-                {
-                    System.out.println(snapshot.getKey().equals(mAuth.getUid()));
-                    oppositesexfind("male");
-                }
-
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-
-
-    }
-    String opposex;
-    private void oppositesexfind(String oppositesex)
-    {
-
-
-        setOpposex(oppositesex);
-        final DatabaseReference oppref = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositesex);
-
-        oppref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-
-                if(snapshot.exists() && !snapshot.child("Connections").child("Rejected").hasChild(mAuth.getUid()) && !snapshot.child("Connections").child("Liked").hasChild(mAuth.getUid()))
-                {
-                    Cards cards = new Cards("",snapshot.child("Users").child("name").getValue().toString(),snapshot.getKey());
-                    listcard.add(cards);
-                    arrayAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-    }
 
 
 
@@ -342,6 +177,13 @@ public class MainPageActivity extends AppCompatActivity {
         }
 
         backPressedtime = System.currentTimeMillis();
+    }
+
+
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_layout, fragment);
+        transaction.commit();
     }
 
     @Override

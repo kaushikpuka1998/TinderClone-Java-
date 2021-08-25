@@ -10,4 +10,7 @@
     <color name="Green">#06E806</color>
     <color name="Blue">#0138FF</color>
     <color name="Violet">#5000ca</color>
+    <color name="Transparent">#0CFFFFFF</color>
+
+
 </resources>

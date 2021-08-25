@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
     android:layout_gravity="center"
-    android:background="@drawable/custom_button"
+    android:background="@drawable/bottomnavigationcolor"
     android:layout_height="550dp">
 
 

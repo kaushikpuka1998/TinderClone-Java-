@@ -3,22 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bottomnavigationcolor.xml" value="0.146484375" />
         <entry key="app/src/main/res/drawable/custom_button.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/drawable/customsignupedittext.xml" value="0.35052083333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account.xml" value="0.146484375" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.35052083333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_swipe.xml" value="0.146484375" />
         <entry key="app/src/main/res/drawable/ic_hexagon.xml" value="0.34371807967313583" />
+        <entry key="app/src/main/res/drawable/ic_mesage.xml" value="0.146484375" />
+        <entry key="app/src/main/res/drawable/ic_messageano.xml" value="0.146484375" />
         <entry key="app/src/main/res/drawable/ic_wave.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/drawable/signin_button.xml" value="0.34371807967313583" />
         <entry key="app/src/main/res/drawable/signupbuttonsignuppage.xml" value="0.35052083333333334" />
+        <entry key="app/src/main/res/drawable/slected.xml" value="0.146484375" />
         <entry key="app/src/main/res/font/font.xml" value="0.36875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3302083333333333" />
-        <entry key="app/src/main/res/layout/activity_main_page.xml" value="0.175" />
+        <entry key="app/src/main/res/layout/activity_main_page.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.3302083333333333" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.3302083333333333" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.13125" />
+        <entry key="app/src/main/res/layout/fragment_main.xml" value="0.13125" />
+        <entry key="app/src/main/res/layout/fragment_message.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item.xml" value="0.35517970401691334" />
+        <entry key="app/src/main/res/menu/menu.xml" value="0.3237997957099081" />
       </map>
     </option>
   </component>

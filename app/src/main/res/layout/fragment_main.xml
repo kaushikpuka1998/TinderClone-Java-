@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainpage"
+    tools:context=".Fragment.MainFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Main Fragment" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="950dp">
+
+
+
+
+            <FrameLayout
+                android:id="@+id/fragment_layout"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_marginTop="700dp"
+                tools:ignore="MissingConstraints" />
+
+
+            <com.lorentzos.flingswipe.SwipeFlingAdapterView
+                android:id="@+id/swipeadapter"
+                android:layout_width="match_parent"
+                android:layout_height="550dp"
+                android:layout_marginTop="90dp"
+                app:rotation_degrees="15.5">
+
+
+            </com.lorentzos.flingswipe.SwipeFlingAdapterView>
+
+
+            <TextView
+                android:id="@+id/value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="750dp"
+                android:text="HELLO" />
+
+
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>
