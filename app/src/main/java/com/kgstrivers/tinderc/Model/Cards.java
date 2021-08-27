@@ -2,16 +2,25 @@ package com.kgstrivers.tinderc.Model;
 
 public class Cards {
 
-    String imageurl,name,userid;
+    String imageurl,name,userid,bio;
 
-    public Cards(String imageurl, String name, String userid) {
+    public Cards(String imageurl, String name, String userid, String bio) {
         this.imageurl = imageurl;
         this.name = name;
         this.userid = userid;
+        this.bio = bio;
     }
 
     public String getImageurl() {
         return imageurl;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public void setImageurl(String imageurl) {

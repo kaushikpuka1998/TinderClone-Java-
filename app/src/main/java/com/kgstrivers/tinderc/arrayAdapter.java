@@ -8,7 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kgstrivers.tinderc.Model.Cards;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -34,10 +38,12 @@ public class arrayAdapter extends ArrayAdapter<Cards> {
 
         TextView name = contentView.findViewById(R.id.helloText);
         ImageView imageView = contentView.findViewById(R.id.itemimageview);
+        TextView textView = contentView.findViewById(R.id.Bio);
 
         name.setText(cards_item.getName());
 
-        imageView.setBackgroundResource(R.drawable.femalepic);
+        textView.setText(cards_item.getBio());
+        Picasso.get().load(cards_item.getImageurl()).fit().into(imageView);
 
 
         return contentView;

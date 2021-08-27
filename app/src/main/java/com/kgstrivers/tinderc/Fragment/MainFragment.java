@@ -156,7 +156,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onLeftCardExit(Object o) {
 
-                vf.setText("UPDATED");
+
 
 
 
@@ -171,7 +171,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onRightCardExit(Object o) {
 
-                vf.setText("Updated");
+
 
                 Cards newcard = (Cards)o;
 
@@ -179,7 +179,7 @@ public class MainFragment extends Fragment {
 
                 isMatched(userid);
                 userdb.child(opposex).child(userid).child("Connections").child("Liked").child(mAuth.getUid()).setValue("true");
-                Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Right:"+newcard.getImageurl(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -329,7 +329,7 @@ public class MainFragment extends Fragment {
 
                 if(snapshot.exists() && !snapshot.child("Connections").child("Rejected").hasChild(mAuth.getUid()) && !snapshot.child("Connections").child("Liked").hasChild(mAuth.getUid()))
                 {
-                    Cards cards = new Cards("",snapshot.child("Users").child("name").getValue().toString(),snapshot.getKey());
+                    Cards cards = new Cards(snapshot.child("Users").child("imageurl").getValue().toString(),snapshot.child("Users").child("name").getValue().toString(),snapshot.getKey(),snapshot.child("Users").child("bio").getValue().toString());
                     listcard.add(cards);
                     arrayAdapter.notifyDataSetChanged();
                 }
@@ -367,7 +367,6 @@ public class MainFragment extends Fragment {
         email = view.findViewById(R.id.email);
         logout = view.findViewById(R.id.logout);
         filingContainer = (SwipeFlingAdapterView) view.findViewById(R.id.swipeadapter);
-        vf = view.findViewById(R.id.value);
         bottomNavigationView = view.findViewById(R.id.bottomnavigationview);
 
     }

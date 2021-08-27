@@ -8,12 +8,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,10 +50,10 @@ public class MainPageActivity extends AppCompatActivity {
 
 
     private TextView email;
-    private Button logout;
+    private ImageButton logout;
     private FirebaseAuth mAuth;
     private long backPressedtime;
-    private arrayAdapter arrayAdapter;
+    private Window w;
     BottomNavigationView bottomNavigationView;
 
 
@@ -144,8 +147,18 @@ public class MainPageActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         logout = findViewById(R.id.logout);
         bottomNavigationView = findViewById(R.id.bottomnavigationview);
+
+        changestatusbarcolor();
     }
 
+    private void changestatusbarcolor()
+    {
+        if(Build.VERSION.SDK_INT>=21) {
+            w = this.getWindow();
+
+            w.setStatusBarColor(this.getResources().getColor(android.R.color.holo_red_dark));
+        }
+    }
 
 
 

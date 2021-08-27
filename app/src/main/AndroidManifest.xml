@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TinderC.daylight">
         <activity
+            android:name=".SignupImageActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainPageActivity"
             android:exported="true" />
         <activity

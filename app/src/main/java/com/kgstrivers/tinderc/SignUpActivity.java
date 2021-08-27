@@ -42,6 +42,9 @@ public class SignUpActivity extends AppCompatActivity {
     private RadioButton male;
     private RadioButton female;
     private FirebaseAuth.AuthStateListener mAuthState;
+
+
+    String femail,fpass,fname,fsex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,39 +117,19 @@ public class SignUpActivity extends AppCompatActivity {
                 else
                 {
                     String finalSex = sex;
-                    mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful())
-                            {
-                                Toast.makeText(SignUpActivity.this, "Sign Up Error:", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
 
+                    femail = email;
+                    fpass = pass;
+                    fname = name;
+                    fsex = finalSex;
 
-                                String userid = mAuth.getCurrentUser().getUid();
-                                DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, hh:mm::ss a");
-                                String date = df.format(Calendar.getInstance().getTime());
+                    Intent  tr = new Intent(SignUpActivity.this,SignupImageActivity.class);
+                    tr.putExtra("email",femail);
+                    tr.putExtra("pass",fpass);
+                    tr.putExtra("name",fname);
+                    tr.putExtra("sex",fsex);
 
-                                Users userl = new Users(name,date);
-
-
-                                DatabaseReference dataref = FirebaseDatabase.getInstance().getReference().child("Users").child(finalSex.toLowerCase()).child(userid).child("Users");
-
-                                dataref.setValue(userl);
-
-                                Logind userp = new Logind(mAuth.getCurrentUser().getEmail(),date);
-
-
-                                DatabaseReference dataref1 = FirebaseDatabase.getInstance().getReference().child("Siginandsignout").child(userid).child("Login");
-
-                                dataref1.setValue(userp);
-
-                                Toast.makeText(getApplicationContext(), "Sign up Successful", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    startActivity(tr);
                 }
 
             }

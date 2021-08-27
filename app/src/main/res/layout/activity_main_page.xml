@@ -6,33 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".MainPageActivity">
 
-
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="20dp"
-        android:text="Main Page Activity" />
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="40dp"
-        android:text="Log Out"
-        android:textAllCaps="false" />
-
     <FrameLayout
         android:id="@+id/fragment_layout"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="58dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:background="@drawable/uppertoolbar"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circularimage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/femalepic" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="15dp"
+                android:text="Main Page Activity" />
+
+            <ImageButton
+                android:id="@+id/logout"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="360dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_logout"
+                android:text="Log Out"
+                android:textAllCaps="false" />
+
+
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomnavigationview"
         android:layout_width="match_parent"

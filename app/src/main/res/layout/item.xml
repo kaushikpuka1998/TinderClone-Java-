@@ -4,13 +4,14 @@
     android:layout_width="350dp"
     android:layout_gravity="center"
     android:background="@drawable/bottomnavigationcolor"
-    android:layout_height="550dp">
+    android:layout_height="580dp">
 
 
     <View
         android:id="@+id/item_swipe_left_indicator"
         android:alpha="10"
         android:layout_width="20dp"
+        android:visibility="invisible"
         android:layout_height="20dp"
         android:layout_margin="10dp"
         android:background="@color/Violet" />
@@ -22,15 +23,14 @@
         android:layout_height="20dp"
         android:layout_margin="10dp"
         android:layout_gravity="right"
+        android:visibility="invisible"
         android:background="@color/Violet" />
-
     <ImageView
         android:id="@+id/itemimageview"
-        android:layout_width="330dp"
-        android:layout_height="530dp"
+        android:layout_width="333dp"
+        android:layout_height="483dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/kaushik"/>
+        android:layout_marginTop="10dp"/>
     <TextView
         android:id="@+id/helloText"
         android:textSize="20dp"
@@ -41,6 +41,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/Bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="530dp"
+        android:text="Bio"
+        android:textAllCaps="false"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/white"/>
+
     <ImageButton
         android:layout_width="60dp"
         android:layout_height="70dp"
@@ -49,17 +59,7 @@
         android:background="@drawable/hexa1" />
 
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="450dp"
-        android:layout_marginTop="690dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HELLO"/>
-
-    </RelativeLayout>
 
 
 
