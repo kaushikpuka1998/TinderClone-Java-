@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -97,11 +99,18 @@ public class SignupImageActivity extends AppCompatActivity {
                                 Toast.makeText(SignupImageActivity.this, "Sign Up Error:", Toast.LENGTH_SHORT).show();
                             } else {
 
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(name).build();
+                                if(user!=null) {
+                                    user.updateProfile(profileUpdates);
+                                }
 
                                 if(imguri!=null)
                                 {
 
                                     uploadimage(imguri);
+
                                 }
                                 else
                                 {
@@ -141,7 +150,7 @@ public class SignupImageActivity extends AppCompatActivity {
                        DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, hh:mm::ss a");
                        String date = df.format(Calendar.getInstance().getTime());
 
-                       Users userl = new Users(name, date,peruri.toString(),bio.getText().toString());
+                       Users userl = new Users(name, date,peruri.toString(),bio.getText().toString(),"","","","","");
 
 
                        DatabaseReference dataref = FirebaseDatabase.getInstance().getReference().child("Users").child(sex.toLowerCase()).child(userid).child("Users");

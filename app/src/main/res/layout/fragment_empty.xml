@@ -6,25 +6,32 @@
     tools:context=".Fragment.EmptyFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageView
-        android:id="@+id/notfoundimage"
-        android:layout_width="270dp"
-        android:layout_height="270dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="80dp"
-        android:src="@drawable/not_found"
-        />
-
-    <TextView
-        android:id="@+id/notfoundtext"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content">
 
-        android:text="No Profile Found!!Change Your Interests"
-        android:fontFamily="@font/countryside"
-        android:layout_marginTop="500dp"
-        android:layout_marginLeft="80dp"
-        />
+        <ImageView
+            android:id="@+id/notfoundimage"
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="80dp"
+            android:src="@drawable/not_found"
+            />
+
+        <TextView
+            android:id="@+id/notfoundtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   No Profile Found\n\nChange Your Interests"
+            android:fontFamily="@font/countryside"
+
+            android:layout_marginTop="400dp"
+            android:layout_marginLeft="130dp"
+            />
+
+
+    </RelativeLayout>
 
 
 </FrameLayout>

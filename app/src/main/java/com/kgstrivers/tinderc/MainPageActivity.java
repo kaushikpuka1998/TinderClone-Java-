@@ -1,12 +1,20 @@
 package com.kgstrivers.tinderc;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -61,19 +69,19 @@ public class MainPageActivity extends AppCompatActivity {
     private long backPressedtime;
     private Window w;
     BottomNavigationView bottomNavigationView;
-    private CircleImageView circularimage;
+    public CircleImageView circularimage;
 
 
-
-
-
-
+    NotificationManagerCompat notificationCompat;
+    Notification notification;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
         initialize();
+
+
         MainFragment mainFragment = new MainFragment();
 
         bottomNavigationView.setSelectedItemId(R.id.fraghome);
@@ -83,6 +91,8 @@ public class MainPageActivity extends AppCompatActivity {
 
         }
 
+
+        notific(mAuth.getCurrentUser().getEmail());
         loadFragment(mainFragment);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("ResourceType")
@@ -147,6 +157,7 @@ public class MainPageActivity extends AppCompatActivity {
 
     }
 
+    Users oneuser;
     public void usersexfind()
     {
 
@@ -159,9 +170,20 @@ public class MainPageActivity extends AppCompatActivity {
                 Log.d("UserKey:", snapshot.getKey());
                 if (snapshot.getKey().equals(mAuth.getUid())) {
                     System.out.println(snapshot.getKey().equals(mAuth.getUid()));
+                    String nam = snapshot.child("Users").child("name").getValue().toString();
+                    String sntime = snapshot.child("Users").child("signupdatetime").getValue().toString();
+                    String emai = mAuth.getCurrentUser().getEmail();
+                    String imgur = snapshot.child("Users").child("imageurl").getValue().toString();
+                    String bi = snapshot.child("Users").child("bio").getValue().toString();
+                    String intr1 = snapshot.child("Users").child("intr1").getValue().toString();
+                    String intr2 = snapshot.child("Users").child("intr2").getValue().toString();
+                    String intr3 = snapshot.child("Users").child("intr3").getValue().toString();
+                    String intr4 = snapshot.child("Users").child("intr4").getValue().toString();
+                    String intr5 = snapshot.child("Users").child("intr5").getValue().toString();
 
-                    Users oneuser = new Users(snapshot.child("Users").child("name").getValue().toString(), "", snapshot.child("Users").child("imageurl").getValue().toString(), "");
 
+
+                    oneuser = new Users(nam, sntime,imgur,bi,"","","","","" );
 
                     Picasso.get().load(oneuser.getImageurl()).fit().into(circularimage);
 
@@ -200,9 +222,20 @@ public class MainPageActivity extends AppCompatActivity {
                 if(snapshot.getKey().equals(mAuth.getUid()))
                 {
                     System.out.println(snapshot.getKey().equals(mAuth.getUid()));
+                    String nam = snapshot.child("Users").child("name").getValue().toString();
+                    String sntime = snapshot.child("Users").child("signupdatetime").getValue().toString();
+                    String emai = mAuth.getCurrentUser().getEmail();
+                    String imgur = snapshot.child("Users").child("imageurl").getValue().toString();
+                    String bi = snapshot.child("Users").child("bio").getValue().toString();
+                    String intr1 = snapshot.child("Users").child("intr1").getValue().toString();
+                    String intr2 = snapshot.child("Users").child("intr2").getValue().toString();
+                    String intr3 = snapshot.child("Users").child("intr3").getValue().toString();
+                    String intr4 = snapshot.child("Users").child("intr4").getValue().toString();
+                    String intr5 = snapshot.child("Users").child("intr5").getValue().toString();
 
-                    Users oneuser = new Users(snapshot.child("Users").child("name").getValue().toString(), "", snapshot.child("Users").child("imageurl").getValue().toString(), "");
 
+
+                    oneuser = new Users(nam, sntime,imgur,bi,"","","","","" );
 
                     Picasso.get().load(oneuser.getImageurl()).fit().into(circularimage);
 
@@ -251,6 +284,8 @@ public class MainPageActivity extends AppCompatActivity {
         circularimage = findViewById(R.id.circularimage);
 
         changestatusbarcolor();
+
+
     }
 
     private void changestatusbarcolor()
@@ -301,6 +336,32 @@ public class MainPageActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void fillimage(String url)
+    {
+        Picasso.get().load(url).fit().into(circularimage);
+    }
+    public void notific(String h)
+    {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
+        {
+            NotificationChannel notificationChannel = new NotificationChannel("Mych","Kaushik", NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager notificationManager = (NotificationManager) getBaseContext(). getSystemService(NOTIFICATION_SERVICE);
+
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"Mych").setSmallIcon(R.drawable.tinder).setContentTitle("Welcome Back").setContentText(h).
+                setContentTitle("Welcome Back "+h);
+
+        notification = builder.build();
+
+        notificationCompat = NotificationManagerCompat.from(this);
+
+        notificationCompat.notify(1,notification);
+
+    }
     @Override
     public void onBackPressed() {
         if(mAuth!=null)

@@ -1,13 +1,25 @@
 package com.kgstrivers.tinderc.Fragment;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +44,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.kgstrivers.tinderc.MainPageActivity;
 import com.kgstrivers.tinderc.Model.Cards;
 import com.kgstrivers.tinderc.Model.Logoutd;
+import com.kgstrivers.tinderc.Model.Users;
 import com.kgstrivers.tinderc.R;
 import com.kgstrivers.tinderc.SignInActivity;
 import com.kgstrivers.tinderc.arrayAdapter;
@@ -42,6 +55,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,11 +105,18 @@ public class MainFragment extends Fragment {
     BottomNavigationView bottomNavigationView;
 
     DatabaseReference userdb;
+
+    NotificationManager notificationManager;
     EmptyFragment emptyFragment;
+
+    NotificationCompat.Builder builder;
 
 
     String usersex;
     Boolean emptyfound;
+
+    NotificationManagerCompat notificationCompat;
+    Notification notification;
 
     public void setOpposex(String  u)
     {
@@ -153,7 +174,12 @@ public class MainFragment extends Fragment {
 
 
 
+
+
         }
+
+
+
 
 
         filingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -196,7 +222,7 @@ public class MainFragment extends Fragment {
 
                 String userid = newcard.getUserid();
 
-                isMatched(userid);
+                isMatched(userid,view);
                 userdb.child(opposex).child(userid).child("Connections").child("Liked").child(mAuth.getUid()).setValue("true");
 
             }
@@ -216,7 +242,7 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    private void isMatched(String userid)
+    private void isMatched(String userid,View view)
     {
         DatabaseReference currentuserref = userdb.child(usersex).child(mAuth.getUid()).child("Connections").child("Liked").child(userid);
 
@@ -227,9 +253,16 @@ public class MainFragment extends Fragment {
 
                 if(snapshot.exists())
                 {
-                    Toast.makeText(getContext(), "New Connection", Toast.LENGTH_SHORT).show();
                     userdb.child(opposex).child(snapshot.getKey()).child("Connections").child("Matched").child(mAuth.getUid()).setValue("true");
                     userdb.child(usersex).child(mAuth.getUid()).child("Connections").child("Matched").child(snapshot.getKey()).setValue("true");
+
+
+
+
+                    //String name = userdb.child(opposex).child(snapshot.getKey()).child("Users").child("name").toString();
+
+
+
                 }
             }
 
@@ -330,6 +363,8 @@ public class MainFragment extends Fragment {
     private void oppositesexfind(String oppositesex)
     {
 
+
+
         if(oppositesex == "female")
         {
             setusersex("male");
@@ -389,17 +424,23 @@ public class MainFragment extends Fragment {
 
 
 
-    }
 
+
+
+
+    }
 
     private void initialize(View view)
     {
-
         email = view.findViewById(R.id.email);
+
+
         logout = view.findViewById(R.id.logout);
         filingContainer = (SwipeFlingAdapterView) view.findViewById(R.id.swipeadapter);
         bottomNavigationView = view.findViewById(R.id.bottomnavigationview);
         emptyFragment = new EmptyFragment();
+
+
 
     }
     public void loadFragment(Fragment fragment) {

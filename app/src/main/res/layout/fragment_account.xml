@@ -7,9 +7,66 @@
     tools:context=".Fragment.AccountFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="account fragment" />
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="55dp"
+        android:background="@drawable/profilebox"
+        >
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/accountcircularimage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="95dp"
+            android:layout_marginTop="65dp" />
+
+        <Button
+            android:id="@+id/accountuploadbutton"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="175dp"
+            android:background="@drawable/signin_button"
+            android:fontFamily="@font/comfortaa"
+            android:text="Update"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+
+            />
+
+        <TextView
+            android:id="@+id/accountname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="95dp"
+            android:layout_marginTop="225dp"
+            android:fontFamily="@font/comfortaa"
+            android:text="name"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/emaildetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="95dp"
+            android:layout_marginTop="255dp"
+            android:fontFamily="@font/comfortaa"
+            android:text="email"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/biodetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="285dp"
+            android:fontFamily="@font/comfortaa"
+            android:text="Bio:"
+            android:textColor="@color/white" />
+
+
+
+    </RelativeLayout>
 </FrameLayout>

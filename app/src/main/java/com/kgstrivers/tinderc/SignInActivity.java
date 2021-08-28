@@ -69,6 +69,19 @@ public class SignInActivity extends AppCompatActivity {
             final String email = signinemail.getText().toString();
             final String pass = signinpass.getText().toString();
 
+
+            if(email.isEmpty())
+            {
+                Toast.makeText(this, "Email Absent", Toast.LENGTH_SHORT).show();
+            }
+            else if(pass.isEmpty())
+            {
+                Toast.makeText(this, "Password Absent", Toast.LENGTH_SHORT).show();
+            }else
+            {
+
+
+
                 mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -93,7 +106,10 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     }
                 });
-            });
+            }});
+
+
+
 
 
     }
