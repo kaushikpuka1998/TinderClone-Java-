@@ -28,6 +28,7 @@
         <entry key="app/src/main/res/layout/activity_signup_image.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_account.xml" value="0.13125" />
+        <entry key="app/src/main/res/layout/fragment_empty.xml" value="0.14140625" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.13125" />
         <entry key="app/src/main/res/layout/fragment_message.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item.xml" value="0.35517970401691334" />

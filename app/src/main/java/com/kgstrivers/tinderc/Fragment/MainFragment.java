@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -90,9 +91,11 @@ public class MainFragment extends Fragment {
     BottomNavigationView bottomNavigationView;
 
     DatabaseReference userdb;
+    EmptyFragment emptyFragment;
 
 
     String usersex;
+    Boolean emptyfound;
 
     public void setOpposex(String  u)
     {
@@ -102,6 +105,11 @@ public class MainFragment extends Fragment {
     public void setusersex(String u)
     {
         usersex = u;
+    }
+
+    public void setfragstatus(Boolean u)
+    {
+        emptyfound = u;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,6 +134,7 @@ public class MainFragment extends Fragment {
 
 
 
+
         userdb = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
@@ -145,19 +154,28 @@ public class MainFragment extends Fragment {
 
 
         }
+
+
         filingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
 
                 listcard.remove(0);
+
+
                 arrayAdapter.notifyDataSetChanged();
+
+                if(arrayAdapter.isEmpty() || listcard.isEmpty())
+                {
+                    loadFragment(emptyFragment);
+                }
+
+
+
             }
 
             @Override
             public void onLeftCardExit(Object o) {
-
-
-
 
 
                 Cards newcard = (Cards)o;
@@ -165,7 +183,8 @@ public class MainFragment extends Fragment {
                 String userid = newcard.getUserid();
                 userdb.child(opposex).child(userid).child("Connections").child("Rejected").child(mAuth.getUid()).setValue("true");
 
-                Toast.makeText(getContext(), "Left", Toast.LENGTH_SHORT).show();
+
+
             }
 
             @Override
@@ -179,12 +198,11 @@ public class MainFragment extends Fragment {
 
                 isMatched(userid);
                 userdb.child(opposex).child(userid).child("Connections").child("Liked").child(mAuth.getUid()).setValue("true");
-                Toast.makeText(getContext(), "Right:"+newcard.getImageurl(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onAdapterAboutToEmpty(int arri) {
-
 
             }
 
@@ -193,9 +211,10 @@ public class MainFragment extends Fragment {
 
             }
         });
+
+
         return view;
     }
-
 
     private void isMatched(String userid)
     {
@@ -221,9 +240,10 @@ public class MainFragment extends Fragment {
         });
 
 
-    }public void usersexfind()
+    }
+    public void usersexfind()
     {
-        Boolean[] present = {false};
+
         final DatabaseReference maleref = FirebaseDatabase.getInstance().getReference().child("Users").child("male");
         maleref.addChildEventListener(new ChildEventListener() {
             @Override
@@ -331,7 +351,18 @@ public class MainFragment extends Fragment {
                 {
                     Cards cards = new Cards(snapshot.child("Users").child("imageurl").getValue().toString(),snapshot.child("Users").child("name").getValue().toString(),snapshot.getKey(),snapshot.child("Users").child("bio").getValue().toString());
                     listcard.add(cards);
+
+
+
                     arrayAdapter.notifyDataSetChanged();
+
+
+
+                }
+
+                if(listcard.size()==0 || arrayAdapter.isEmpty())
+                {
+                    loadFragment(emptyFragment);
                 }
             }
 
@@ -368,6 +399,13 @@ public class MainFragment extends Fragment {
         logout = view.findViewById(R.id.logout);
         filingContainer = (SwipeFlingAdapterView) view.findViewById(R.id.swipeadapter);
         bottomNavigationView = view.findViewById(R.id.bottomnavigationview);
+        emptyFragment = new EmptyFragment();
 
     }
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_layout, fragment);
+        transaction.commit();
+    }
+
 }

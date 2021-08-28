@@ -4,9 +4,6 @@ public class Users {
     String Name,Signupdatetime,Imageurl,bio;
 
 
-    public Users() {
-    }
-
     public Users(String name, String signupdatetime, String imageurl, String bio) {
         Name = name;
         Signupdatetime = signupdatetime;

@@ -33,10 +33,10 @@
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp"
-                android:textColor="@color/white"
+                android:layout_marginLeft="60dp"
                 android:layout_marginTop="15dp"
-                android:text="Main Page Activity" />
+                android:text=""
+                android:textColor="@color/white" />
 
             <ImageButton
                 android:id="@+id/logout"
@@ -53,6 +53,8 @@
 
 
     </androidx.appcompat.widget.Toolbar>
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomnavigationview"
         android:layout_width="match_parent"

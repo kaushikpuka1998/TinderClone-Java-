@@ -17,6 +17,7 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +37,9 @@ import com.kgstrivers.tinderc.Fragment.MessageFragment;
 import com.kgstrivers.tinderc.Model.Cards;
 import com.kgstrivers.tinderc.Model.Logind;
 import com.kgstrivers.tinderc.Model.Logoutd;
+import com.kgstrivers.tinderc.Model.Users;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,15 +49,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainPageActivity extends AppCompatActivity {
 
 
-    private TextView email;
+    private TextView email,notfoundtext;
+    private ImageView notfoundimage;
     private ImageButton logout;
     private FirebaseAuth mAuth;
     private long backPressedtime;
     private Window w;
     BottomNavigationView bottomNavigationView;
+    private CircleImageView circularimage;
+
 
 
 
@@ -71,8 +79,8 @@ public class MainPageActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.fraghome);
         if(mAuth!=null)
         {
-            String em = mAuth.getCurrentUser().getEmail().toString();
-            email.setText(em);
+            usersexfind();
+
         }
 
         loadFragment(mainFragment);
@@ -139,6 +147,99 @@ public class MainPageActivity extends AppCompatActivity {
 
     }
 
+    public void usersexfind()
+    {
+
+        final DatabaseReference maleref = FirebaseDatabase.getInstance().getReference().child("Users").child("male");
+        maleref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+
+
+                Log.d("UserKey:", snapshot.getKey());
+                if (snapshot.getKey().equals(mAuth.getUid())) {
+                    System.out.println(snapshot.getKey().equals(mAuth.getUid()));
+
+                    Users oneuser = new Users(snapshot.child("Users").child("name").getValue().toString(), "", snapshot.child("Users").child("imageurl").getValue().toString(), "");
+
+
+                    Picasso.get().load(oneuser.getImageurl()).fit().into(circularimage);
+
+                    email.setText(oneuser.getName());
+                }
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        final DatabaseReference femaleref = FirebaseDatabase.getInstance().getReference().child("Users").child("female");
+
+        femaleref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getKey().equals(mAuth.getUid()))
+                {
+                    System.out.println(snapshot.getKey().equals(mAuth.getUid()));
+
+                    Users oneuser = new Users(snapshot.child("Users").child("name").getValue().toString(), "", snapshot.child("Users").child("imageurl").getValue().toString(), "");
+
+
+                    Picasso.get().load(oneuser.getImageurl()).fit().into(circularimage);
+
+                    email.setText(oneuser.getName());
+
+                }
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+
+    }
+
 
     private void initialize()
     {
@@ -147,6 +248,7 @@ public class MainPageActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         logout = findViewById(R.id.logout);
         bottomNavigationView = findViewById(R.id.bottomnavigationview);
+        circularimage = findViewById(R.id.circularimage);
 
         changestatusbarcolor();
     }
