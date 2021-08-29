@@ -151,7 +151,14 @@ public class MainFragment extends Fragment {
 
 
 
+
+
         mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth!=null)
+        {
+            usersexfind();
+        }
 
 
 
@@ -162,25 +169,7 @@ public class MainFragment extends Fragment {
         listcard= new ArrayList<Cards>();
         //choose your favorite adapter
         arrayAdapter = new arrayAdapter(getContext(), R.layout.item, listcard);
-
-
         filingContainer.setAdapter(arrayAdapter);
-
-        if(mAuth!=null)
-        {
-
-
-            usersexfind();
-
-
-
-
-
-        }
-
-
-
-
 
         filingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -191,10 +180,7 @@ public class MainFragment extends Fragment {
 
                 arrayAdapter.notifyDataSetChanged();
 
-                if(arrayAdapter.isEmpty() || listcard.isEmpty())
-                {
-                    loadFragment(emptyFragment);
-                }
+
 
 
 
@@ -210,7 +196,10 @@ public class MainFragment extends Fragment {
                 userdb.child(opposex).child(userid).child("Connections").child("Rejected").child(mAuth.getUid()).setValue("true");
 
 
-
+                if(listcard.size()==0 || arrayAdapter.isEmpty())
+                {
+                    loadFragment(emptyFragment);
+                }
             }
 
             @Override
@@ -225,11 +214,15 @@ public class MainFragment extends Fragment {
                 isMatched(userid,view);
                 userdb.child(opposex).child(userid).child("Connections").child("Liked").child(mAuth.getUid()).setValue("true");
 
+
+
+
             }
 
             @Override
             public void onAdapterAboutToEmpty(int arri) {
 
+                //loadFragment(emptyFragment);
             }
 
             @Override
@@ -257,11 +250,14 @@ public class MainFragment extends Fragment {
                     userdb.child(usersex).child(mAuth.getUid()).child("Connections").child("Matched").child(snapshot.getKey()).setValue("true");
 
 
-
+                    Toast.makeText(getContext(), "New Connection Added", Toast.LENGTH_SHORT).show();
 
                     //String name = userdb.child(opposex).child(snapshot.getKey()).child("Users").child("name").toString();
 
-
+                    if(listcard.size()==0 || arrayAdapter.isEmpty())
+                    {
+                        loadFragment(emptyFragment);
+                    }
 
                 }
             }
@@ -368,11 +364,16 @@ public class MainFragment extends Fragment {
         if(oppositesex == "female")
         {
             setusersex("male");
+
+            MainPageActivity g = new MainPageActivity();
+            g.usersex = "male";
         }
 
         if(oppositesex == "male")
         {
             setusersex("female");
+            MainPageActivity g = new MainPageActivity();
+            g.usersex = "female";
         }
         setOpposex(oppositesex);
         final DatabaseReference oppref = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositesex);
@@ -391,14 +392,14 @@ public class MainFragment extends Fragment {
 
                     arrayAdapter.notifyDataSetChanged();
 
-
-
                 }
 
                 if(listcard.size()==0 || arrayAdapter.isEmpty())
                 {
                     loadFragment(emptyFragment);
                 }
+
+
             }
 
             @Override

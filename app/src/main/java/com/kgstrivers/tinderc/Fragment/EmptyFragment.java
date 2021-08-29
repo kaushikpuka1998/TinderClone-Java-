@@ -26,8 +26,11 @@ public class EmptyFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
     public EmptyFragment() {
         // Required empty public constructor
+
+
     }
 
     /**

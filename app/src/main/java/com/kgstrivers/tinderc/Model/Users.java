@@ -7,6 +7,7 @@ public class Users {
     public Users(String name, String signupdatetime, String imageurl, String bio, String intr1, String intr2, String intr3, String intr4, String int5) {
         Name = name;
         Signupdatetime = signupdatetime;
+
         Imageurl = imageurl;
         this.bio = bio;
         this.intr1 = intr1;
@@ -16,6 +17,7 @@ public class Users {
         this.intr5 = int5;
 
     }
+
 
 
     public String getIntr1() {

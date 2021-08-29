@@ -74,6 +74,8 @@ public class MainPageActivity extends AppCompatActivity {
 
     NotificationManagerCompat notificationCompat;
     Notification notification;
+
+    public String usersex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
